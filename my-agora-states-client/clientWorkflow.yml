@@ -1,0 +1,27 @@
+name: Github Actions Practice
+
+# 언제 job을 작동시킬지
+on: [push, pull_request]
+
+# 어떤 job을 할지
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Github Actions Test
+        uses: actions/setup-node@v1
+        with:
+          node-version: '16'
+      - run: npm install
+      - run: npm test
+  build:
+    needs : test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Github Actions Build
+        uses: actions/setup-node@v1
+        with:
+          node-version: '16'
+      - run: npm build
